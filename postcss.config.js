@@ -1,9 +1,9 @@
-// This file uses the CommonJS format (`module.exports`) to ensure
-// compatibility with the Next.js build process.
+// This file uses the CommonJS format (`module.exports`) and the plugin name
+// that your build tool requires when it throws an error.
 
 module.exports = {
   plugins: {
-    tailwindcss: {},
+    '@tailwindcss/postcss': {},
     autoprefixer: {},
   },
 };
