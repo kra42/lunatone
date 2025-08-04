@@ -1,56 +1,21 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import type { User } from '@supabase/supabase-js';
+import SpecialPromotionBanner from '../components/SpecialPromotionBanner'; 
+// Assuming your Icons.tsx file is in src/components/
+import {
+  UserIcon,
+  MusicNoteIcon,
+  HomeIcon,
+  PianoIcon,
+  GuitarIcon,
+  DrumsIcon,
+  CelloIcon,
+  TromboneIcon,
+} from '../components/Icons';
 
-// --- SVG Icons ---
-const UserIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-    </svg>
-);
-
-const MusicNoteIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 19V6l10-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm10-13l-10 3" />
-    </svg>
-);
-
-const HomeIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-    </svg>
-);
-
-const PianoIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto text-violet-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v16.5h16.5V3.75H3.75zM8.25 19.5V9.75h-3v9.75h3zm4.5 0V9.75h-3v9.75h3zm4.5 0V9.75h-3v9.75h3zM8.25 8.25h.01M12.75 8.25h.01M17.25 8.25h.01"/>
-    </svg>
-);
-
-const GuitarIcon = () => (
-     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto text-violet-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 9l4.5 4.5m-4.5 0L13.5 9M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm6 6a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-    </svg>
-);
-
-const DrumsIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto text-violet-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8.25c-2.488 0-4.5 2.012-4.5 4.5s2.012 4.5 4.5 4.5 4.5-2.012 4.5-4.5-2.012-4.5-4.5-4.5zM12 18.75c-3.314 0-6-2.686-6-6s2.686-6 6-6 6 2.686 6 6-2.686 6-6 6zM5.25 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM19.5 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 5.25a.75.75 0 100-1.5.75.75 0 000 1.5zM12 19.5a.75.75 0 100 1.5.75.75 0 000-1.5z" />
-    </svg>
-);
-
-const CelloIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto text-violet-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M6 3v18M10 3v18M14 3v18M18 3v18M4 6h16M4 10h16M4 14h16M4 18h16" />
-    </svg>
-);
-
-const TromboneIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto text-violet-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 8.25V15.75h18V8.25M4.5 8.25v-3a1.5 1.5 0 011.5-1.5h12a1.5 1.5 0 011.5 1.5v3M9 15.75v3.75m6-3.75v3.75" />
-    </svg>
-);
 
 // --- Main Page Component ---
 export default function Home() {
@@ -96,12 +61,19 @@ export default function Home() {
 
   return (
     <div className="bg-violet-50 font-sans text-gray-700">
-      {/* Header */}
+      
+      {/* Special Promotion Banner*/}
+      <SpecialPromotionBanner user={user} />
       <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-violet-100">
-        <div className="container mx-auto px-6 py-3 flex justify-between items-center">
-          <div className="text-lg font-bold text-violet-800 tracking-wider">
-            {'LUNATONE'}
-            <span className="block text-xs font-light tracking-widest text-violet-500">{'MUSIC SCHOOL'}</span>
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center space-x-4">
+            <Image src="/logo.jpg" alt="Lunatone Music School Logo" width={80} height={80} />
+            <div>
+              <div className="text-2xl font-extrabold  text-violet-800 tracking-wider">
+                {'LUNATONE'}
+              </div>
+              <span className="block text-sm font-bold tracking-widest text-violet-800">{'MUSIC SCHOOL'}</span>
+            </div>
           </div>
           <nav className="hidden md:flex space-x-8">
             {navLinks.map(link => (
@@ -120,7 +92,9 @@ export default function Home() {
               </>
             ) : (
               <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-600">{'Welcome!'}</span>
+                <span className="text-sm text-gray-600">
+                  {user?.user_metadata?.first_name ? `Welcome, ${user.user_metadata.first_name}!` : 'Welcome!'}
+                </span>                
                 <button onClick={signOut} className="px-4 py-2 text-sm text-white bg-violet-500 rounded-lg hover:bg-violet-600 transition-colors duration-300">
                   {'Log Out'}
                 </button>
@@ -133,30 +107,30 @@ export default function Home() {
       {/* Main Content */}
       <main>
         {/* Hero Section */}
-        <section className="bg-white">
-          <div className="container mx-auto px-6 py-20 md:py-24 text-center">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-violet-900 leading-tight mb-4">
-              {'Inspire. Create. Play.'}
+        <section className="bg-gradient-to-r from-purple-600 to-pink-500 text-white">
+          <div className="container mx-auto px-6 py-28 md:py-40 text-center">
+            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+              {'Register an Account to Start Your Music Journey'}
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-              {'Private & Group Music Lessons for Kids, Teens, and Adults'}
+            <p className="text-lg text-gray-200 max-w-3xl mx-auto mb-10">
+              {'Your path to musical excellence begins here. Join our vibrant community, learn from inspiring instructors, and grow with confidence.'}
             </p>
-            <button className="bg-violet-500 hover:bg-violet-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-              {'Book a Trial Class'}
+            <button className="bg-white text-purple-600 font-bold py-4 px-10 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              {'Register Now'}
             </button>
           </div>
         </section>
 
         {/* Why Choose Lunatone? */}
-        <section className="py-16">
+        <section className="py-20 md:py-24">
           <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl font-bold text-violet-800 mb-2">{'Why Choose Lunatone?'}</h2>
-            <p className="text-gray-500 mb-10">{'We offer the best learning experience.'}</p>
-            <div className="grid md:grid-cols-3 gap-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-violet-800 mb-4">{'Why Choose Lunatone?'}</h2>
+            <p className="text-gray-500 mb-16 max-w-2xl mx-auto">{'We offer the best learning experience.'}</p>
+            <div className="grid md:grid-cols-3 gap-10">
               <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
                 <UserIcon />
                 <h3 className="font-bold text-xl my-4 text-violet-900">{'Professional Instructors'}</h3>
-                <p className="text-gray-600">{'Learn-from experienced and passionate music educators.'}</p>
+                <p className="text-gray-600">{'Learn from experienced and passionate music educators.'}</p>
               </div>
               <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
                 <MusicNoteIcon />
@@ -165,19 +139,19 @@ export default function Home() {
               </div>
               <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
                 <HomeIcon />
-                <h3 className="font-bold text-xl my-4 text-violet-900">{'Kid-Friendly Environment'}</h3>
-                <p className="text-gray-600">{'Supportive and fun fan lessons designed for young learners.'}</p>
+                <h3 className="font-bold text-xl my-4 text-violet-900">{'Child-Friendly Environment'}</h3>
+                <p className="text-gray-600">{'Supportive and fun lessons designed for young learners.'}</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* Our Programs */}
-        <section className="py-16 bg-white">
+        <section className="py-20 md:py-24 bg-white">
           <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl font-bold text-violet-800 mb-2">{'Our Programs'}</h2>
-            <p className="text-gray-500 mb-10">{'Find the perfect instrument for you.'}</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-violet-800 mb-4">{'Our Programs'}</h2>
+            <p className="text-gray-500 mb-16 max-w-2xl mx-auto">{'Find the perfect instrument for you.'}</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8">
               {programs.map(program => (
                 <div key={program.name} className="bg-violet-100/50 p-6 rounded-xl hover:bg-violet-100 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
                   {program.icon}
@@ -189,10 +163,10 @@ export default function Home() {
         </section>
         
         {/* Meet Our Teachers */}
-        <section className="py-16">
+        <section className="py-20 md:py-24">
             <div className="container mx-auto px-6 text-center">
-                <h2 className="text-3xl font-bold text-violet-800 mb-2">{'Meet Our Teachers'}</h2>
-                <p className="text-gray-500 max-w-2xl mx-auto mb-8">{'Experienced, friendly, and passionate about teaching music.'}</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-violet-800 mb-4">{'Meet Our Teachers'}</h2>
+                <p className="text-gray-500 max-w-2xl mx-auto mb-10">{'Experienced, friendly, and passionate about teaching music.'}</p>
                 <button className="border-2 border-violet-500 text-violet-500 font-bold py-3 px-8 rounded-lg hover:bg-violet-500 hover:text-white transition-colors duration-300">
                     {'View All Teachers'}
                 </button>
@@ -200,11 +174,11 @@ export default function Home() {
         </section>
 
         {/* Testimonials & CTA */}
-        <section className="py-16 bg-white">
-            <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+        <section className="py-20 md:py-24 bg-white">
+            <div className="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
                 <div className="text-center md:text-left">
                     <h3 className="text-2xl font-bold text-violet-800 mb-4">{'What Our Students Say'}</h3>
-                    <blockquote className="bg-violet-50 p-6 rounded-xl italic">
+                    <blockquote className="bg-violet-50 p-8 rounded-xl italic">
                         <p className="text-gray-600">{'"Lunatone helped my child fall in love with music. The teachers are amazing!"'}</p>
                         <cite className="block text-right not-italic font-semibold text-violet-600 mt-4">{'- A Happy Parent'}</cite>
                     </blockquote>
@@ -221,7 +195,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8">
+      <footer className="bg-gray-800 text-white py-12">
         <div className="container mx-auto px-6 text-center text-sm text-gray-400">
           <p>{'©'} {new Date().getFullYear()} {'Lunatone Music School. All Rights Reserved.'}</p>
         </div>
