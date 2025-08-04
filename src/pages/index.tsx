@@ -1,10 +1,12 @@
-import Link from 'next/link';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import type { User } from '@supabase/supabase-js';
-import SpecialPromotionBanner from '../components/SpecialPromotionBanner'; 
-// Assuming your Icons.tsx file is in src/components/
+
+// Import your new reusable components
+import Header from '../components/Header';
+import SpecialPromotionBanner from '../components/SpecialPromotionBanner';
+
+// Import your icons
 import {
   UserIcon,
   MusicNoteIcon,
@@ -15,6 +17,7 @@ import {
   CelloIcon,
   TromboneIcon,
 } from '../components/Icons';
+import Footer from '@/components/Footer';
 
 
 // --- Main Page Component ---
@@ -37,20 +40,6 @@ export default function Home() {
     };
   }, []);
 
-
-  async function signOut() {
-    await supabase.auth.signOut();
-  }
-
-  const navLinks = [
-    { name: 'Private Classes', href: '#' },
-    { name: 'Group Classes', href: '#' },
-    { name: 'Teachers', href: '#' },
-    { name: 'News/Events', href: '#' },
-    { name: 'About', href: '#' },
-    { name: 'Contact', href: '#' },
-  ];
-
   const programs = [
     { name: 'Piano', icon: <PianoIcon /> },
     { name: 'Guitar', icon: <GuitarIcon /> },
@@ -61,48 +50,8 @@ export default function Home() {
 
   return (
     <div className="bg-violet-50 font-sans text-gray-700">
-      
-      {/* Special Promotion Banner*/}
       <SpecialPromotionBanner user={user} />
-      <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-violet-100">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <Image src="/logo.jpg" alt="Lunatone Music School Logo" width={80} height={80} />
-            <div>
-              <div className="text-2xl font-extrabold  text-violet-800 tracking-wider">
-                {'LUNATONE'}
-              </div>
-              <span className="block text-sm font-bold tracking-widest text-violet-800">{'MUSIC SCHOOL'}</span>
-            </div>
-          </div>
-          <nav className="hidden md:flex space-x-8">
-            {navLinks.map(link => (
-              <a key={link.name} href={link.href} className="text-gray-600 hover:text-violet-600 transition duration-300 text-sm font-medium">{link.name}</a>
-            ))}
-          </nav>
-          <div className="flex items-center space-x-2">
-            {!user ? (
-              <>
-                <Link href="/signin" className="px-4 py-2 text-sm text-violet-700 bg-violet-100 rounded-lg hover:bg-violet-200 transition-colors duration-300">
-                  {'Sign in'}
-                </Link>
-                <Link href="/signup" className="px-4 py-2 text-sm text-white bg-violet-500 rounded-lg hover:bg-violet-600 transition-colors duration-300">
-                  {'Register'}
-                </Link>
-              </>
-            ) : (
-              <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-600">
-                  {user?.user_metadata?.first_name ? `Welcome, ${user.user_metadata.first_name}!` : 'Welcome!'}
-                </span>                
-                <button onClick={signOut} className="px-4 py-2 text-sm text-white bg-violet-500 rounded-lg hover:bg-violet-600 transition-colors duration-300">
-                  {'Log Out'}
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
+      <Header user={user} />
 
       {/* Main Content */}
       <main>
@@ -130,7 +79,7 @@ export default function Home() {
               <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
                 <UserIcon />
                 <h3 className="font-bold text-xl my-4 text-violet-900">{'Professional Instructors'}</h3>
-                <p className="text-gray-600">{'Learn from experienced and passionate music educators.'}</p>
+                <p className="text-gray-600">{'Learn-from experienced and passionate music educators.'}</p>
               </div>
               <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
                 <MusicNoteIcon />
@@ -139,8 +88,8 @@ export default function Home() {
               </div>
               <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
                 <HomeIcon />
-                <h3 className="font-bold text-xl my-4 text-violet-900">{'Child-Friendly Environment'}</h3>
-                <p className="text-gray-600">{'Supportive and fun lessons designed for young learners.'}</p>
+                <h3 className="font-bold text-xl my-4 text-violet-900">{'Kid-Friendly Environment'}</h3>
+                <p className="text-gray-600">{'Supportive and fun fan lessons designed for young learners.'}</p>
               </div>
             </div>
           </div>
@@ -194,12 +143,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-12">
-        <div className="container mx-auto px-6 text-center text-sm text-gray-400">
-          <p>{'©'} {new Date().getFullYear()} {'Lunatone Music School. All Rights Reserved.'}</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
