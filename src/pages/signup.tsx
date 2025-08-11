@@ -6,13 +6,25 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Logo from '../components/Logo';
 
+// Define a specific type for the user data to avoid using 'any'
+interface UserData {
+  role: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  registrant_type?: string; // This property is optional
+}
+
 export default function SignUp() {
   const [user, setUser] = useState<User | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState(''); // 1. Add state for confirm password
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [role, setRole] = useState('student');
+  const [registrantType, setRegistrantType] = useState('Parent/Guardian');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
@@ -20,13 +32,9 @@ export default function SignUp() {
     supabase.auth.getUser().then(({ data }) => {
         setUser(data.user);
     });
-
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
         setUser(session?.user ?? null);
-      }
-    );
-
+    });
     return () => {
       authListener.subscription.unsubscribe();
     };
@@ -37,18 +45,35 @@ export default function SignUp() {
     setError('');
     setMessage('');
 
+    // 2. Check if passwords match
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return; // Stop the function if they don't match
+    }
+
+    const userData: UserData = {
+      role,
+      first_name: firstName,
+      last_name: lastName,
+      phone_number: phoneNumber,
+    };
+
+    if (role === 'student') {
+      userData.registrant_type = registrantType;
+    }
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: { role, first_name: firstName, last_name: lastName },
+        data: userData,
       },
     });
 
     if (error) {
       setError(error.message);
     } else {
-      setMessage('Check your email to verify your account before signing in.');
+      setMessage('Success! Check your email to verify your account.');
     }
   }
 
@@ -59,6 +84,7 @@ export default function SignUp() {
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
             <Link href="/" className="inline-block">
+              <Logo />
             </Link>
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
               Create Your Account
@@ -68,30 +94,33 @@ export default function SignUp() {
           <form className="mt-8 space-y-6 rounded-lg bg-white p-8 shadow-xl" onSubmit={signUp}>
             <div className="space-y-4 rounded-md">
               <div className="grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-x-4">
-                <div>
-                  <label htmlFor="first-name" className="sr-only">First Name</label>
-                  <input id="first-name" name="first-name" type="text" required className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm" placeholder="First Name" value={firstName} onChange={e => setFirstName(e.target.value)} />
-                </div>
-                <div>
-                  <label htmlFor="last-name" className="sr-only">Last Name</label>
-                  <input id="last-name" name="last-name" type="text" required className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm" placeholder="Last Name" value={lastName} onChange={e => setLastName(e.target.value)} />
-                </div>
+                <input name="first-name" type="text" required className="w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-500 focus:border-violet-500 focus:outline-none focus:ring-violet-500" placeholder="First Name" value={firstName} onChange={e => setFirstName(e.target.value)} />
+                <input name="last-name" type="text" required className="w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-500 focus:border-violet-500 focus:outline-none focus:ring-violet-500" placeholder="Last Name" value={lastName} onChange={e => setLastName(e.target.value)} />
               </div>
-              <div>
-                <label htmlFor="email-address" className="sr-only">Email address</label>
-                <input id="email-address" name="email" type="email" autoComplete="email" required className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} />
-              </div>
-              <div>
-                <label htmlFor="password" className="sr-only">Password</label>
-                <input id="password" name="password" type="password" autoComplete="current-password" required className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-              </div>
-               <div>
-                  <label htmlFor="role" className="sr-only">I am a...</label>
-                  <select id="role" name="role" value={role} onChange={e => setRole(e.target.value)} className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm">
-                      <option value="student">Student</option>
-                      <option value="teacher">Teacher</option>
+
+              <input name="phone-number" type="tel" required className="w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-500 focus:border-violet-500 focus:outline-none focus:ring-violet-500" placeholder="Phone Number" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
+
+              <div className="grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-x-4">
+                <select name="role" value={role} onChange={e => setRole(e.target.value)} className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-violet-500 focus:outline-none focus:ring-violet-500">
+                    <option value="student">I&apos;m a Student</option>
+                    <option value="teacher">I&apos;m a Teacher</option>
+                </select>
+                
+                {role === 'student' && (
+                  <select name="registrantType" value={registrantType} onChange={e => setRegistrantType(e.target.value)} className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-violet-500 focus:outline-none focus:ring-violet-500">
+                    <option value="Parent/Guardian">I&apos;m a Parent/Guardian</option>
+                    <option value="Adult Student">I&apos;m an Adult Student</option>
                   </select>
+                )}
               </div>
+
+              <hr className="my-2"/>
+              
+              <input name="email" type="email" autoComplete="email" required className="w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-500 focus:border-violet-500 focus:outline-none focus:ring-violet-500" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} />
+              <input name="password" type="password" autoComplete="new-password" required className="w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-500 focus:border-violet-500 focus:outline-none focus:ring-violet-500" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+              
+              {/* 3. Add the new confirm password input field */}
+              <input name="confirm-password" type="password" required className="w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-500 focus:border-violet-500 focus:outline-none focus:ring-violet-500" placeholder="Confirm Password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
             </div>
 
             <div>
@@ -104,7 +133,6 @@ export default function SignUp() {
           {message && <p className="mt-2 text-center text-sm text-green-600">{message}</p>}
           <p className="mt-2 text-center text-sm text-gray-600">
             Already have an account?{' '}
-            {/* Corrected Link component */}
             <Link href="/signin" className="font-medium text-violet-600 hover:text-violet-500">
               Sign In
             </Link>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { supabase } from '../lib/supabaseClient';
 import type { User } from '@supabase/supabase-js';
 
@@ -64,9 +65,13 @@ export default function Home() {
             <p className="text-lg text-gray-200 max-w-3xl mx-auto mb-10">
               {'Your path to musical excellence begins here. Join our vibrant community, learn from inspiring instructors, and grow with confidence.'}
             </p>
-            <button className="bg-white text-purple-600 font-bold py-4 px-10 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-              {'Register Now'}
-            </button>
+            {/* This button is now a Link to the signup page */}
+            <Link 
+              href="/signup" 
+              className="bg-white text-purple-600 font-bold py-4 px-10 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              Register Now
+            </Link>
           </div>
         </section>
 
