@@ -4,7 +4,7 @@ const Navigation: FC = () => {
   const navLinks = [
     { name: 'Private Classes', href: '#' },
     { name: 'Group Classes', href: '#' },
-    { name: 'Teachers', href: '#' },
+    { name: 'Teachers', href: '/teachers' },
     { name: 'News/Events', href: '#' },
     { name: 'About', href: '#' },
     { name: 'Contact', href: '#' },
