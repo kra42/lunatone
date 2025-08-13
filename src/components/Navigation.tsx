@@ -7,7 +7,7 @@ const Navigation: FC = () => {
     { name: 'Teachers', href: '/teachers' },
     { name: 'News/Events', href: '#' },
     { name: 'About', href: '#' },
-    { name: 'Contact', href: '#' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   return (
