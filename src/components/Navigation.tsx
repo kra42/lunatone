@@ -2,7 +2,7 @@ import type { FC } from 'react';
 
 const Navigation: FC = () => {
   const navLinks = [
-    { name: 'Private Classes', href: '#' },
+    { name: 'Private Lessons', href: '/private-lessons' },
     { name: 'Group Classes', href: '#' },
     { name: 'Teachers', href: '/teachers' },
     { name: 'News/Events', href: '#' },

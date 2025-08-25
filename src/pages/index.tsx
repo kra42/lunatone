@@ -1,24 +1,13 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { supabase } from '../lib/supabaseClient';
 import type { User } from '@supabase/supabase-js';
 
-// Import your new reusable components
+// Import your reusable components
 import Header from '../components/Header';
 import SpecialPromotionBanner from '../components/SpecialPromotionBanner';
-
-// Import your icons
-import {
-  UserIcon,
-  MusicNoteIcon,
-  HomeIcon,
-  PianoIcon,
-  GuitarIcon,
-  DrumsIcon,
-  CelloIcon,
-  TromboneIcon,
-} from '../components/Icons';
-import Footer from '@/components/Footer';
+import Footer from '../components/Footer';
 
 
 // --- Main Page Component ---
@@ -42,12 +31,12 @@ export default function Home() {
   }, []);
 
   const programs = [
-    { name: 'Piano', icon: <PianoIcon /> },
-    { name: 'Guitar', icon: <GuitarIcon /> },
-    { name: 'Drums', icon: <DrumsIcon /> },
-    { name: 'Cello', icon: <CelloIcon /> },
-    { name: 'Trombone', icon: <TromboneIcon /> },
-  ];
+      { name: 'Piano', iconUrl: '/images/icons/piano-icon.svg' },
+      { name: 'Violin', iconUrl: '/images/icons/violin-icon.svg' },
+      { name: 'Trombone', iconUrl: '/images/icons/trombone-icon.svg' },
+      { name: 'Guzheng', iconUrl: '/images/icons/guzheng-icon.svg' },
+      { name: 'Vocals', iconUrl: '/images/icons/vocals-icon.svg' },
+    ];
 
   return (
     <div className="bg-violet-50 font-sans text-gray-700">
@@ -57,7 +46,7 @@ export default function Home() {
       {/* Main Content */}
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-purple-600 to-pink-500 text-white">
+        <section className="bg-gradient-to-r from-purple-600 to-yellow-500 text-white">
           <div className="container mx-auto px-6 py-28 md:py-40 text-center">
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
               {'Register an Account to Start Your Music Journey'}
@@ -65,7 +54,6 @@ export default function Home() {
             <p className="text-lg text-gray-200 max-w-3xl mx-auto mb-10">
               {'Your path to musical excellence begins here. Join our vibrant community, learn from inspiring instructors, and grow with confidence.'}
             </p>
-            {/* This button is now a Link to the signup page */}
             <Link 
               href="/signup" 
               className="bg-white text-purple-600 font-bold py-4 px-10 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
@@ -81,19 +69,19 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-violet-800 mb-4">{'Why Choose Lunatone?'}</h2>
             <p className="text-gray-500 mb-16 max-w-2xl mx-auto">{'We offer the best learning experience.'}</p>
             <div className="grid md:grid-cols-3 gap-10">
-              <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
-                <UserIcon />
+              <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                <Image src="/images/icons/teacher-icon.svg" alt="Instructors Icon" width={80} height={80} />
                 <h3 className="font-bold text-xl my-4 text-violet-900">{'Professional Instructors'}</h3>
                 <p className="text-gray-600">{'Learn-from experienced and passionate music educators.'}</p>
               </div>
-              <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
-                <MusicNoteIcon />
+              <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                <Image src="/images/icons/flexible-icon.svg" alt="Options Icon" width={80} height={80} />
                 <h3 className="font-bold text-xl my-4 text-violet-900">{'Flexible Options'}</h3>
                 <p className="text-gray-600">{'Private and group lessons available for all ages and skill levels.'}</p>
               </div>
-              <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
-                <HomeIcon />
-                <h3 className="font-bold text-xl my-4 text-violet-900">{'Kid-Friendly Environment'}</h3>
+              <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                <Image src="/images/icons/children-friendly-icon.svg" alt="Environment Icon" width={80} height={80} />
+                <h3 className="font-bold text-xl my-4 text-violet-900">{'Children-Friendly Environment'}</h3>
                 <p className="text-gray-600">{'Supportive and fun fan lessons designed for young learners.'}</p>
               </div>
             </div>
@@ -107,8 +95,13 @@ export default function Home() {
             <p className="text-gray-500 mb-16 max-w-2xl mx-auto">{'Find the perfect instrument for you.'}</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8">
               {programs.map(program => (
-                <div key={program.name} className="bg-violet-100/50 p-6 rounded-xl hover:bg-violet-100 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                  {program.icon}
+                <div key={program.name} className="bg-violet-100/50 p-6 rounded-xl hover:bg-violet-100 hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col items-center justify-start">
+                  <Image
+                    src={program.iconUrl}
+                    alt={`${program.name} icon`}
+                    width={80}
+                    height={80}
+                  />
                   <h3 className="font-semibold text-lg mt-4 text-violet-900">{program.name}</h3>
                 </div>
               ))}
