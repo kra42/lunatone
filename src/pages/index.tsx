@@ -48,7 +48,7 @@ export default function Home() {
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-purple-600 to-yellow-500 text-white">
           <div className="container mx-auto px-6 py-28 md:py-40 text-center">
-            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6 max-w-3xl mx-auto">
               {'Register an Account to Start Your Music Journey'}
             </h1>
             <p className="text-lg text-gray-200 max-w-3xl mx-auto mb-10">
@@ -114,9 +114,11 @@ export default function Home() {
             <div className="container mx-auto px-6 text-center">
                 <h2 className="text-3xl md:text-4xl font-bold text-violet-800 mb-4">{'Meet Our Teachers'}</h2>
                 <p className="text-gray-500 max-w-2xl mx-auto mb-10">{'Experienced, friendly, and passionate about teaching music.'}</p>
-                <button className="border-2 border-violet-500 text-violet-500 font-bold py-3 px-8 rounded-lg hover:bg-violet-500 hover:text-white transition-colors duration-300">
-                    {'View All Teachers'}
-                </button>
+                <Link href="/teachers">
+                  <button className="border-2 border-violet-500 text-violet-500 font-bold py-3 px-8 rounded-lg hover:bg-violet-500 hover:text-white transition-colors duration-300">
+                      {'View All Teachers'}
+                  </button>
+                </Link>
             </div>
         </section>
 
