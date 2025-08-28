@@ -5,7 +5,7 @@ import type { FC } from 'react';
 const Logo: FC = () => {
   return (
     <Link href="/" className="flex items-center space-x-4">
-      <Image src="/images/logo.jpg" alt="Lunatone Music School Logo" width={80} height={80} />
+      <Image src="/images/logo.jpg" alt="Lunatone Music School Logo" width={100} height={100} />
       <div>
         <div className="text-2xl font-extrabold text-violet-800 tracking-wider">
           {'LUNATONE'}

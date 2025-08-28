@@ -5,8 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-// Import the new modal component
-import TeacherModelPopup from '../components/TeacherModelPopup';
 
 // SVGs and other components remain the same
 const RightArrowIcon = () => (
@@ -24,8 +22,6 @@ const SparkleIcon = () => (
 
 export default function PrivateLessonsPage() {
   const [user, setUser] = useState<User | null>(null);
-  // Add state to manage the modal's visibility
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -40,11 +36,11 @@ export default function PrivateLessonsPage() {
   }, []);
 
   const tuitionDetails = [
-    { name: 'Piano', iconUrl: '/images/icons/piano-icon.svg', pricing: { regular: { 30: 40, 45: 60, 60: 80 }, senior: { 30: 45, 45: 70, 60: 90 } }, packageLink: '#', trialLink: '#' },
-    { name: 'Violin', iconUrl: '/images/icons/violin-icon.svg', pricing: { regular: { 30: 40, 45: 60, 60: 80 } }, packageLink: '#', trialLink: '#' },
-    { name: 'Trombone', iconUrl: '/images/icons/trombone-icon.svg', pricing: { regular: { 30: 40, 45: 60, 60: 80 } }, packageLink: '#', trialLink: '#' },
-    { name: 'Guzheng', iconUrl: '/images/icons/guzheng-icon.svg', pricing: { regular: { 30: 40, 45: 60, 60: 80 } }, packageLink: '#', trialLink: '#' },
-    { name: 'Vocals', iconUrl: '/images/icons/vocals-icon.svg', pricing: { regular: { 30: 40, 45: 60, 60: 80 } }, packageLink: '#', trialLink: '#' },
+    { name: 'Piano', iconUrl: '/images/icons/piano-icon.svg', pricing: { 30: 50, 45: 70, 60: 90 }, trialLink: 'https://app.acuityscheduling.com/schedule.php?owner=36770282&appointmentType=82765701K', packageLink: 'https://app.acuityscheduling.com/schedule.php?owner=36770282&appointmentType=category:Private%20Piano%20Lesson' },
+    // { name: 'Violin', iconUrl: '/images/icons/violin-icon.svg', pricing: { 30: 50, 45: 70, 60: 90 }, trialLink: 'ACUITY_VIOLIN_TRIAL_LINK', packageLink: 'ACUITY_VIOLIN_PACKAGE_LINK' 
+    { name: 'Trombone', iconUrl: '/images/icons/trombone-icon.svg', pricing: { 30: 50, 45: 70, 60: 90 }, trialLink: 'https://app.acuityscheduling.com/schedule.php?owner=36770282&appointmentType=82765714', packageLink: 'https://app.acuityscheduling.com/schedule.php?owner=36770282&appointmentType=category:Private%20Trombone%20Lesson' },
+    { name: 'Guzheng', iconUrl: '/images/icons/guzheng-icon.svg', pricing: { 30: 50, 45: 70, 60: 90 }, trialLink: 'https://app.acuityscheduling.com/schedule.php?owner=36770282&appointmentType=82765725', packageLink: 'https://app.acuityscheduling.com/schedule.php?owner=36770282&appointmentType=category:Private%20Guzheng%20Lesson' },
+    { name: 'Vocals', iconUrl: '/images/icons/vocals-icon.svg', pricing: { 30: 50, 45: 70, 60: 90 }, trialLink: 'https://app.acuityscheduling.com/schedule.php?owner=36770282&appointmentType=82765720', packageLink: 'https://app.acuityscheduling.com/schedule.php?owner=36770282&appointmentType=category:Private%20Trombone%20Lesson' },
   ];
 
   return (
@@ -77,7 +73,7 @@ export default function PrivateLessonsPage() {
             <h2 className="text-center text-3xl md:text-4xl font-bold text-violet-800 mb-16">
               Lesson Structure & Tuition
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
               {tuitionDetails.map((instrument) => (
                 <div key={instrument.name} className="rounded-lg bg-violet-50 p-8 shadow-md">
                   <div className="flex items-center mb-4">
@@ -85,20 +81,11 @@ export default function PrivateLessonsPage() {
                     <h3 className="ml-4 text-2xl font-bold text-gray-800">{instrument.name}</h3>
                   </div>
                   <div className="space-y-2 text-gray-700">
-                    <p><strong>Regular:</strong> 30 min - ${instrument.pricing.regular[30]} | 45 min - ${instrument.pricing.regular[45]} | 60 min - ${instrument.pricing.regular[60]}</p>
-                    {instrument.pricing.senior ? (
-                      <p><strong>Senior:</strong> 30 min - ${instrument.pricing.senior[30]} | 45 min - ${instrument.pricing.senior[45]} | 60 min - ${instrument.pricing.senior[60]}</p>
-                    ) : (
-                      <p className="invisible">Placeholder for alignment</p>
-                    )}
+                    <p className="font-bold">Pricing: 30 min - ${instrument.pricing[30]} | 45 min - ${instrument.pricing[45]} | 60 min - ${instrument.pricing[60]}</p>
                   </div>
                   <p className="mt-4 font-semibold text-green-600 flex items-center">
                     <SparkleIcon /> Save 10% when booking 15+ classes
                   </p>
-                  {/* Changed from <a> to <button> to open the modal */}
-                  <button onClick={() => setIsModalOpen(true)} className="mt-1 text-sm text-violet-600 hover:underline">
-                    Learn about Regular vs. Senior teachers →
-                  </button>
                   <div className="mt-6 flex items-center space-x-4">
                     <Link href={instrument.trialLink} className="bg-violet-600 hover:bg-violet-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">
                       Book a Trial Lesson
@@ -143,8 +130,6 @@ export default function PrivateLessonsPage() {
 
       <Footer />
       
-      {/* Render the modal component here */}
-      <TeacherModelPopup isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }

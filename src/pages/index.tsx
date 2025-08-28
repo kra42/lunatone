@@ -32,7 +32,7 @@ export default function Home() {
 
   const programs = [
       { name: 'Piano', iconUrl: '/images/icons/piano-icon.svg' },
-      { name: 'Violin', iconUrl: '/images/icons/violin-icon.svg' },
+      // { name: 'Violin', iconUrl: '/images/icons/violin-icon.svg' },
       { name: 'Trombone', iconUrl: '/images/icons/trombone-icon.svg' },
       { name: 'Guzheng', iconUrl: '/images/icons/guzheng-icon.svg' },
       { name: 'Vocals', iconUrl: '/images/icons/vocals-icon.svg' },
@@ -93,17 +93,19 @@ export default function Home() {
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-violet-800 mb-4">{'Our Programs'}</h2>
             <p className="text-gray-500 mb-16 max-w-2xl mx-auto">{'Find the perfect instrument for you.'}</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8">
+            <div className="flex flex-wrap justify-center gap-8">
               {programs.map(program => (
-                <div key={program.name} className="bg-violet-100/50 p-6 rounded-xl hover:bg-violet-100 hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col items-center justify-start">
-                  <Image
-                    src={program.iconUrl}
-                    alt={`${program.name} icon`}
-                    width={80}
-                    height={80}
-                  />
-                  <h3 className="font-semibold text-lg mt-4 text-violet-900">{program.name}</h3>
-                </div>
+                <Link href={`/private-lessons`} key={program.name} className="block w-60">
+                  <div className="bg-violet-100/50 p-6 rounded-xl hover:bg-violet-100 hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col items-center justify-start h-full">
+                    <Image
+                      src={program.iconUrl}
+                      alt={`${program.name} icon`}
+                      width={80}
+                      height={80}
+                    />
+                    <h3 className="font-semibold text-lg mt-4 text-violet-900">{program.name}</h3>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>

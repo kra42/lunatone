@@ -110,14 +110,14 @@ export default function ContactPage() {
               <div>
                 <h3 className="text-2xl font-bold text-gray-800">Our Studio</h3>
                 <div className="mt-4 space-y-2 text-gray-700">
-                  <p>123 Music Lane, Surrey, BC, V3Z 2B9</p>
-                  <p>(778) 555-1234</p>
-                  <p>contact@lunatone.com</p>
+                  <p>4613 Kingsway, Burnaby, BC, V5H 2B3</p>
+                  <p>604-861-9620</p>
+                  <p>lunatone.bc@gmail.com</p>
                 </div>
               </div>
               <div>
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d83558.63691491227!2d-122.8943963428272!3d49.1043693445353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5485d877b0f4a5c9%3A0x2e8a4421b023e421!2sSurrey%2C%2C%20BC!5e0!3m2!1sen!2sca!4v1691821482813!5m2!1sen!2sca"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2605.688222015844!2d-123.0039025239639!3d49.22922137138868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54867658ed0497d3%3A0xb91db4ff7bda9de1!2s4613%20Kingsway%2C%20Burnaby%2C%20BC%20V5H%202B3!5e0!3m2!1sen!2sca!4v1715897181878!5m2!1sen!2sca"
                   width="100%"
                   height="350"
                   style={{ border: 0 }}
