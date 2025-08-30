@@ -29,6 +29,7 @@ const groupCourses = [
       { text: '$50-$80 CAD', icon: '/images/icons/course-price-icon.svg' },
       { text: 'Exam Prep', icon: '/images/icons/student-level-icon.svg' },
     ],
+    learnMoreLink: '/group-courses/rcm-theory',
   },
   {
     name: 'Pianorama Group Class',
@@ -45,6 +46,7 @@ const groupCourses = [
       { text: '$40 CAD', icon: '/images/icons/course-price-icon.svg' },
       { text: 'Ages 3-7', icon: '/images/icons/student-level-icon.svg' },
     ],
+    learnMoreLink: '/group-courses/pianorama',
   },
   {
     name: 'Vocal Performance Program',
@@ -61,6 +63,7 @@ const groupCourses = [
       { text: '$40 CAD', icon: '/images/icons/course-price-icon.svg' },
       { text: 'Ages 6+', icon: '/images/icons/student-level-icon.svg' },
     ],
+    learnMoreLink: '/courses/vocal-performance',
   },
   {
     name: 'Trombone Group Lessons',
@@ -77,6 +80,7 @@ const groupCourses = [
       { text: '$40 CAD', icon: '/images/icons/course-price-icon.svg' },
       { text: 'Brass Basics', icon: '/images/icons/student-level-icon.svg' },
     ],
+    learnMoreLink: '/group-courses/trombone-lessons',
   },
 ];
 
@@ -144,7 +148,7 @@ export default function GroupCoursesPage() {
                     <Link href="#" className="bg-violet-600 hover:bg-violet-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">
                       Register Now
                     </Link>
-                    <Link href="#" className="text-violet-700 font-bold hover:underline">
+                    <Link href={course.learnMoreLink} className="text-violet-700 font-bold hover:underline">
                       Learn More
                     </Link>
                   </div>

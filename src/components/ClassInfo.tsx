@@ -18,7 +18,7 @@ const ClassInfo: FC<ClassInfoProps> = ({ details }) => {
           key={index}
           className="flex h-28 flex-col items-center justify-center gap-2 rounded-lg bg-violet-200 p-2 shadow-sm"
         >
-          <Image src={detail.icon} alt="" width={32} height={32} className="h-8 w-8" />
+          <Image src={detail.icon} alt={detail.text} width={32} height={32} className="h-8 w-8" />
           <p className="text-sm font-semibold text-gray-800">{detail.text}</p>
         </div>
       ))}
@@ -27,4 +27,3 @@ const ClassInfo: FC<ClassInfoProps> = ({ details }) => {
 };
 
 export default ClassInfo;
-
