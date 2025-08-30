@@ -6,7 +6,7 @@ const Navigation: FC = () => {
   const router = useRouter();
   const navLinks = [
     { name: 'Private Lessons', href: '/private-lessons' },
-    { name: 'Group Classes', href: '#' },
+    { name: 'Group Classes', href: '/group-courses' },
     { name: 'Packages', href: '/packages' },
     { name: 'Rental', href: '#' },
     { name: 'Teachers', href: '/teachers' },
